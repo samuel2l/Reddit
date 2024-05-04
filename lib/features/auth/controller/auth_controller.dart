@@ -6,8 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authControllerProvider = Provider((ref) {
   return AuthController(
-      authRepository: AuthRepo(
-          firestore: firestore, auth: auth, googleSignIn: googleSignIn));
+      authRepository: ref.read(authRepoProvider));
 });
 
 class AuthController {
