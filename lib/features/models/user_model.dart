@@ -8,7 +8,7 @@ class UserModel {
   final String dp;
   final String banner;
   final String uId;
-  final bool isGuest;
+  final bool isUser;
   final int karma;
   final List<String> awards;
   UserModel({
@@ -16,7 +16,7 @@ class UserModel {
     required this.dp,
     required this.banner,
     required this.uId,
-    required this.isGuest,
+    required this.isUser,
     required this.karma,
     required this.awards,
   });
@@ -27,7 +27,7 @@ class UserModel {
     String? dp,
     String? banner,
     String? uId,
-    bool? isGuest,
+    bool? isUser,
     int? karma,
     List<String>? awards,
   }) {
@@ -36,7 +36,7 @@ class UserModel {
       dp: dp ?? this.dp,
       banner: banner ?? this.banner,
       uId: uId ?? this.uId,
-      isGuest: isGuest ?? this.isGuest,
+      isUser: isUser ?? this.isUser,
       karma: karma ?? this.karma,
       awards: awards ?? this.awards,
     );
@@ -48,7 +48,7 @@ class UserModel {
       'dp': dp,
       'banner': banner,
       'uId': uId,
-      'isGuest': isGuest,
+      'isUser': isUser,
       'karma': karma,
       'awards': awards,
     };
@@ -60,7 +60,7 @@ class UserModel {
       dp: map['dp'] as String,
       banner: map['banner'] as String,
       uId: map['uId'] as String,
-      isGuest: map['isGuest'] as bool,
+      isUser: map['isUser'] as bool,
       karma: map['karma'] as int,
       awards: List<String>.from((map['awards'] as List<String>)),
     );
@@ -72,7 +72,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, dp: $dp, banner: $banner, uId: $uId, isGuest: $isGuest, karma: $karma, awards: $awards)';
+    return 'UserModel(name: $name, dp: $dp, banner: $banner, uId: $uId, isUser: $isUser, karma: $karma, awards: $awards)';
   }
 
   @override
@@ -84,7 +84,7 @@ class UserModel {
       other.dp == dp &&
       other.banner == banner &&
       other.uId == uId &&
-      other.isGuest == isGuest &&
+      other.isUser == isUser &&
       other.karma == karma &&
       listEquals(other.awards, awards);
   }
@@ -95,7 +95,7 @@ class UserModel {
       dp.hashCode ^
       banner.hashCode ^
       uId.hashCode ^
-      isGuest.hashCode ^
+      isUser.hashCode ^
       karma.hashCode ^
       awards.hashCode;
   }
