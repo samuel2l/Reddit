@@ -4,15 +4,15 @@ import 'package:reddit/features/auth/controller/auth_controller.dart';
 
 class SignInBtn extends ConsumerWidget {
   const SignInBtn({super.key});
-  void signInWithGoogle(WidgetRef ref) {
-    ref.read(authControllerProvider).signInWithGoogle();
+  void signInWithGoogle(WidgetRef ref,context) {
+    ref.read(authControllerProvider).signInWithGoogle(context);
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextButton(
         onPressed: () {
-          signInWithGoogle(ref);
+          signInWithGoogle(ref,context);
         },
         child: const Text('Continue with Google'));
   }
