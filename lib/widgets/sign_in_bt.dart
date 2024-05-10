@@ -5,7 +5,7 @@ import 'package:reddit/features/auth/controller/auth_controller.dart';
 class SignInBtn extends ConsumerWidget {
   const SignInBtn({super.key});
   void signInWithGoogle(WidgetRef ref,context) {
-    ref.read(authControllerProvider).signInWithGoogle(context);
+    ref.read(authControllerProvider.notifier).signInWithGoogle(context);
   }
 
   @override
