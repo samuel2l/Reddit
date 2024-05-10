@@ -32,7 +32,7 @@ class AuthRepo {
           idToken: (await googleUser?.authentication)?.idToken);
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
-      print(userCredential.user);
+      print(userCredential.user?.email);
     } catch (e) {
       print(e);
     }
