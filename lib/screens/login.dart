@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reddit/widgets/sign_in_bt.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -8,7 +9,7 @@ class LoginScreen extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          TextButton(onPressed: (){}, child: Text('Continue with Google')),
+SignInBtn(),
           TextButton(onPressed: (){}, child: Text('Sign in as guest')),
 
         ],
