@@ -26,7 +26,7 @@ class AuthRepo {
         _auth = auth,
         _googleSignIn = googleSignIn;
   CollectionReference get _users => _firestore.collection('users');
-  void signInWithGoogle() async {
+  Future<UserModel> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final credential = GoogleAuthProvider.credential(
@@ -36,8 +36,8 @@ class AuthRepo {
           await _auth.signInWithCredential(credential);
       print(userCredential.user?.email);
       var user = userCredential.user!;
-      UserModel userModel;
-      if (userCredential.additionalUserInfo!.isNewUser){
+       UserModel userModel;
+      if (userCredential.additionalUserInfo!.isNewUser) {
         //this check so if the user is not new his/her data does not reset
         userModel = UserModel(
             name: user.displayName ?? 'nameless',
@@ -51,9 +51,25 @@ class AuthRepo {
             //this func takes a map so we map the props of our user to our data in the db
             //to avoid the plenty stress we have the to map mtd
             userModel.toMap());
+
+      return userModel;
+      } 
+
+      else {
+        //.first will give the first element of the stream
+        userModel = await getUserData(userCredential.user!.uid).first;
+
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  Stream<UserModel> getUserData(String uid) {
+    //its of type Stream so we can persist the state
+    return _users
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data() as Map<String,dynamic>));
   }
 }
