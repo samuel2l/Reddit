@@ -1,31 +1,60 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reddit/features/auth/controller/auth_controller.dart';
+import 'package:reddit/features/models/user_model.dart';
 import 'package:reddit/firebase_options.dart';
+import 'package:reddit/routes.dart';
 import 'package:reddit/themes/pallette.dart';
-import 'package:reddit/rou'
 import 'package:routemaster/routemaster.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
-  //we will use route master for navigation
-  //this helps when app is used on the web as well since we can define the routes easier
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  UserModel? userModel;
+  void getData(WidgetRef ref, User data) async {
+    userModel = await ref
+        .watch(authControllerProvider.notifier)
+        .getUserData(data.uid)
+        .first;
+    ref.read(userProvider.notifier).update((state) => userModel);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ref.watch(authStateChangeProvider).when(
           data: (data) => MaterialApp.router(
-            routerDelegate: RoutemasterDelegate(routesBuilder: (context) => loggedOutRoutes),
-        routeInformationParser:const RoutemasterParser(),
+            routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
+              // if (data != null) {
+              //   return loggedInRoutes;
+              // } else {
+              //   return loggedOutRoutes;
+              // }
+              if (data != null) {
+                getData(ref, data);
+                //so if there is data it means user is logged in and the userModel var should not be null
+                if (userModel != null) {
+                  return loggedInRoutes;
+                }
+              }
+              return loggedOutRoutes;
+            }),
+            routeInformationParser: const RoutemasterParser(),
             title: 'Reddit',
             theme: Pallete.darkModeAppTheme,
           ),
