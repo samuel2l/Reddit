@@ -78,7 +78,7 @@ class AuthRepo {
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
-            name: user.displayName ?? 'nameless',
+            name: user.displayName ?? 'Lionel Messi',
             dp: user.photoURL!,
             banner: bannerDefault,
             uId: user.uid,

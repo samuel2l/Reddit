@@ -13,17 +13,18 @@ class LoginScreen extends ConsumerWidget {
     //remember it meant that the actual state of the provider was of type bool
     //hence here we get access to the provider which is what we actually we want and why we did not use the .notifier
     //the .notifier will make it of type auth controller and allow us access the funcs and props of the auth controller class
-    return isLoading
-        ? Center(
-            child: Column(
-              children: [
-                SignInBtn(),
-                TextButton(onPressed: () {}, child: Text('Sign in as guest')),
-              ],
-            ),
-          )
-        : Center(
-            child: CircularProgressIndicator(),
-          );
+    print(isLoading);
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              SignInBtn(),
+              TextButton(onPressed: () {}, child: Text('Sign in as guest')),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,19 +39,22 @@ class _MyAppState extends ConsumerState<MyApp> {
           data: (data) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
             routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
-              // if (data != null) {
-              //   return loggedInRoutes;
-              // } else {
+              print(data);
+              if (data == null || userModel==null) {
+                return loggedOutRoutes;
+              }
+              //  else {
               //   return loggedOutRoutes;
               // }
-              if (data != null) {
-                getData(ref, data);
-                //so if there is data it means user is logged in and the userModel var should not be null
-                if (userModel != null) {
-                  return loggedInRoutes;
-                }
-              }
-              return loggedOutRoutes;
+              // if (data != null) {
+              // if (data) {
+              getData(ref, data);
+              //so if there is data it means user is logged in and the userModel var should not be null
+              // if (userModel != null) {
+              return loggedInRoutes;
+              // }
+              // }
+              // return loggedOutRoutes;
             }),
             routeInformationParser: const RoutemasterParser(),
             title: 'Reddit',
