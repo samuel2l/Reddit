@@ -39,6 +39,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     return ref.watch(authStateChangeProvider).when(
           data: (data) => MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
               // if (data != null) {
               //   return loggedInRoutes;
